@@ -15,6 +15,13 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('post build') {
+			steps {
+				archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
+									onlyIfSuccessful: true
+				junit testResults: '**/surefire-reports/TEST-*.xml'
+			}
+		}
         stage('docker') {
             steps {
                 sh 'docker image build -t sujatajoshi/spc:latest .'
