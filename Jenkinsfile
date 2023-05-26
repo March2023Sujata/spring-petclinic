@@ -15,6 +15,15 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('aks') {
+            steps {
+                 sh 'terraform init'
+                 sh 'terraform fmt'
+                 sh 'terraform validate'
+                 sh 'terraform apply -auto-approve'
+                 sh 'mv kubeconfig ~/.kube/config'
+            }
+        }
         stage('post build') {
 			steps {
 				archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
@@ -28,12 +37,6 @@ pipeline {
                 sh 'docker image push sujatajoshi/spc:latest'
             }
         }
-        stage('deploy') {
-            steps {
-                sh 'kubectl apply -f .'
-                sh 'sleep 10s'
-                sh 'kubectl get svc'
-            }
-        }
+        
     }    
 }
