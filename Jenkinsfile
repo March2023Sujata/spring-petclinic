@@ -21,5 +21,12 @@ pipeline {
                 sh 'docker image push sujatajoshi/spc:latest'
             }
         }
+        stage('deploy') {
+            steps {
+                sh 'kubectl apply -f .'
+                sh 'sleep 10s'
+                sh 'kubectl get svc'
+            }
+        }
     }    
 }
