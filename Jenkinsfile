@@ -15,5 +15,11 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('docker') {
+            steps {
+                sh 'docker image build -t sujatajoshi/spc:latest .'
+                sh 'docker image push sujatajoshi/spc:latest'
+            }
+        }
     }    
 }
