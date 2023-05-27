@@ -33,8 +33,8 @@ pipeline {
 	    }
         stage('docker') {
             steps {
-                sh 'docker image build -t sujatajoshi/spc:$BUILD_NUMBER .'
-                sh 'docker image push sujatajoshi/spc:$BUILD_NUMBER'
+                sh 'docker image build -t sujatajoshi/dev-spc:$BUILD_NUMBER .'
+                sh 'docker image push sujatajoshi/dev-spc:$BUILD_NUMBER'
             }
         }
     }    
