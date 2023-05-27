@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'Node' }
+    trigger {
+        pollSCM('')
+    }
     stages {
         stage('vcs') {
             steps {
