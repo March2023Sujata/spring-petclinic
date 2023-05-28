@@ -17,11 +17,13 @@ pipeline {
         }
         stage('aks') {
             steps {
-                 sh 'terraform init'
-                 sh 'terraform fmt'
-                 sh 'terraform validate'
-                 sh 'terraform apply -auto-approve'
-                 sh 'mv kubeconfig ~/.kube/config'
+                dir('terraform'){
+                    sh 'terraform init'
+                    sh 'terraform fmt'
+                    sh 'terraform validate'
+                    sh 'terraform apply -auto-approve'
+                    sh 'mv kubeconfig ~/.kube/config'
+                }
             }
         }
         stage('post build') {
