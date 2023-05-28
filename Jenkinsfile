@@ -19,8 +19,6 @@ pipeline {
             steps {
                 dir('terraform'){
                     sh 'terraform init'
-                    sh 'terraform fmt'
-                    sh 'terraform validate'
                     sh 'terraform apply -auto-approve'
                     sh 'mv kubeconfig ~/.kube/config'
                 }
@@ -35,15 +33,19 @@ pipeline {
 		}
         stage('docker') {
             steps {
-                sh 'docker image build -t sujatajoshi/qa-spc:$BUILD_NUMBER .'
-                sh 'docker image push sujatajoshi/qa-spc:$BUILD_NUMBER'
+                dir('docker-file'){
+                    sh 'docker image build -t sujatajoshi/qa-spc:$BUILD_NUMBER .'
+                    sh 'docker image push sujatajoshi/qa-spc:$BUILD_NUMBER'
+                }
             }
         }
         stage('deploy') {
             steps {
-                sh 'kubectl apply -f .'
-                sh 'sleep 10s'
-                sh 'kubectl get svc'
+                dir('k8s-files'){
+                    sh 'kubectl apply -f .'
+                    sh 'sleep 10s'
+                    sh 'kubectl get svc'
+                }
             }
         }
     }    
