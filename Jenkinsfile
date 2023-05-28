@@ -33,10 +33,8 @@ pipeline {
 		}
         stage('docker') {
             steps {
-                dir('docker-file'){
                     sh 'docker image build -t sujatajoshi/qa-spc:$BUILD_NUMBER .'
-                    sh 'docker image push sujatajoshi/qa-spc:$BUILD_NUMBER'
-                }
+                    sh 'docker image push sujatajoshi/qa-spc:$BUILD_NUMBER'    
             }
         }
         stage('deploy') {
