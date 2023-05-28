@@ -37,6 +37,6 @@ spec:
     spec:
       containers:
         - name: spc
-          image: sujatajoshi/spc:1
+          image: sujatajoshi/qa-spc:1
           ports:
             - containerPort: 8080
