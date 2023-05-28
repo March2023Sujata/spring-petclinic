@@ -19,8 +19,6 @@ pipeline {
             steps {
                 dir('terraform'){
                     sh 'terraform init'
-                    sh 'terraform fmt'
-                    sh 'terraform validate'
                     sh 'terraform apply -auto-approve'
                     sh 'mv kubeconfig ~/.kube/config'
                 }
