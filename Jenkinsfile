@@ -39,10 +39,11 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                dir('k8s-files'){
-                    sh 'kubectl apply -f .'
+                dir('k8s-files/qa'){
+                    sh 'kubectl apply -k .'
                     sh 'sleep 10s'
                     sh 'kubectl get svc'
+                    sh 'kustomize edit set image sujatajoshi/qa-spc=sujatajoshi/qa-spc:$BUILD_NUMBER'
                 }
             }
         }
