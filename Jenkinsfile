@@ -43,7 +43,7 @@ pipeline {
                     sh 'kustomize edit set image sujatajoshi/qa-spc=sujatajoshi/qa-spc:$BUILD_NUMBER'
                     sh 'kubectl apply -k .'
                     sh 'sleep 10s'
-                    sh 'kubectl get svc'    
+                    sh 'kubectl get svc -n qa'    
                 }
             }
         }
